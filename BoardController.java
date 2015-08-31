@@ -7,6 +7,7 @@ public class BoardController{
 	private TileGUI[] sequence;
 	private int sequenceCount = 0;
 
+	static WordController wordController = new WordController();
 
 	public BoardController(int dimension){
 		//super(new GridLayout(dimension,dimension)); //create JPanel with grid layout set to dimension spec 
@@ -20,7 +21,7 @@ public class BoardController{
 			for(int column = 0; column<dimension; column++){
 				TileGUI tileToInsert = new TileGUI(letters.removeOne());
 				tileToInsert.setForeground(Color.black);
-				tileToInsert.addActionListener(new ClickHandler(count));
+				tileToInsert.addActionListener(new TileClickHandler(count));
 				tileToInsert.putClientProperty("id", count);
 				tiles[row][column] = tileToInsert;
 				//this.add(tileToInsert);
@@ -33,28 +34,71 @@ public class BoardController{
 		return tiles;
 	}
 
+	
+
+	public boolean handleLetterClick(int id){
+		TileGUI clickedButton = findTile(id);
+		if(isAdjacent(clickedButton)&&(!inSequence(clickedButton))){
+			clickedButton.setForeground(Color.red);
+			sequence[sequenceCount] = clickedButton;
+			sequenceCount++;
+			return true;
+		}
+		else if(clickedButton.equals(sequence[sequenceCount-1])){
+			clickedButton.setForeground(Color.black);
+			sequence[sequenceCount-1] = null;
+			sequenceCount--;
+			return true;
+		}
+		else{
+			return false;
+
+		}
+	}
+
+	public boolean validateWord(String word){
+		
+		if(wordController.isWord(word)){
+			clearUsedTiles();
+			return true;
+			
+		}
+		else{
+			return false;
+		}
+	}
+
 	public String getSequence(){
 		String word = "";
-		for(TileGUI tile:sequence){
-			word+=tile.getTile().letter();
+		for(int i = 0; i<sequenceCount; i++){
+			word+=sequence[i].getTile().letter();
 		}
 		return word;
 	}
 
-	public void handleLetterClick(int id){
-		TileGUI clickedButton = findTile(id);
-		if(isAdjacent(clickedButton)){
-			clickedButton.setForeground(Color.red);
-			sequence[sequenceCount] = clickedButton;
-			sequenceCount++;
-			System.out.print(getSequence());
+	private void clearUsedTiles(){ //needs to account for running out of tiles
+		for(int i =0; i<sequenceCount; i++){
+			int tileID = (int)sequence[i].getClientProperty("id");
+			TileGUI newTile = new TileGUI(letters.removeOne());
+			newTile.setForeground(Color.black);
+			newTile.putClientProperty("id", tileID);
+			newTile.addActionListener(new TileClickHandler(tileID));
+			Coordinate coordinate = tileLocation(tileID);
+			tiles[coordinate.getRow()][coordinate.getColumn()] = newTile;
+			sequence[i]=null;
 		}
-		else{
-			System.out.print("ERROR");
-
-		}
+		sequenceCount=0;
 	}
 
+	private boolean inSequence(TileGUI tile){
+		for(int i =0; i<sequenceCount; i++){
+			if(tile.equals(sequence[i])){
+				return true;
+			} 
+		}
+		return false;
+
+	}
 
 
 	private boolean isAdjacent(TileGUI tile){
@@ -103,12 +147,14 @@ public class BoardController{
 	private Coordinate tileLocation(int id){
 		for(int row =0; row<boardDimension; row++){
 			for(int column = 0; column<boardDimension; column++){
-				if((int)tiles[row][column].getClientProperty("id") == id){
-					return new Coordinate(row, column);
-				}
+				//if(tiles[row][column]!=null&&tiles[row][column].getClientProperty("id")!=null){ 
+					if((int)tiles[row][column].getClientProperty("id") == id){
+						return new Coordinate(row, column);
+					}
+				//}
 			}
 		}
-	
+		System.out.print("not found");
 		return null;
 		
 	}

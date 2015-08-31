@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class TestDriver{
-	static BoardPanel board = new BoardPanel(6);
+public class GameController{
+	static BoardController boardController = new BoardController(6);
+	static BoardView boardView = new BoardView(6, boardController.getBoard());
 	static JFrame frame = new JFrame("Letters game");
 	public static void main(String[] args){
 		
@@ -15,11 +16,11 @@ public class TestDriver{
 	}
 
 	public static void updateBoard(){
-		frame.getContentPane().add(board, BorderLayout.WEST);
+		frame.getContentPane().add(boardView, BorderLayout.WEST);
 	    frame.pack();
 	}
 
 	public static void click(int id){
-		board.handleLetterClick(id);
+		boardController.handleLetterClick(id);
 	}
 }

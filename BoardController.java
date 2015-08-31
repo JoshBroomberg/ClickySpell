@@ -1,10 +1,6 @@
-import java.awt.*;
-import javax.swing.JPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
 
-
-public class BoardPanel extends JPanel{
+public class BoardController{
 	private int boardDimension;
 	private TileCollection letters = new TileCollection();
 	private TileGUI[][] tiles;
@@ -12,8 +8,8 @@ public class BoardPanel extends JPanel{
 	private int sequenceCount = 0;
 
 
-	public BoardPanel(int dimension){
-		super(new GridLayout(dimension,dimension)); //create JPanel with grid layout set to dimension spec 
+	public BoardController(int dimension){
+		//super(new GridLayout(dimension,dimension)); //create JPanel with grid layout set to dimension spec 
 		boardDimension = dimension;
 		tiles = new TileGUI[dimension][dimension]; //create tile 2D array with size matching dimensions
 		sequence = new TileGUI[(int)Math.pow(dimension,2)]; //create array to hold selected sequence with size = total tiles possible
@@ -27,10 +23,22 @@ public class BoardPanel extends JPanel{
 				tileToInsert.addActionListener(new ClickHandler(count));
 				tileToInsert.putClientProperty("id", count);
 				tiles[row][column] = tileToInsert;
-				this.add(tileToInsert);
+				//this.add(tileToInsert);
 				count++;
 			}	
 		}
+	}
+
+	public TileGUI[][] getBoard(){
+		return tiles;
+	}
+
+	public String getSequence(){
+		String word = "";
+		for(TileGUI tile:sequence){
+			word+=tile.getTile().letter();
+		}
+		return word;
 	}
 
 	public void handleLetterClick(int id){
@@ -39,12 +47,15 @@ public class BoardPanel extends JPanel{
 			clickedButton.setForeground(Color.red);
 			sequence[sequenceCount] = clickedButton;
 			sequenceCount++;
+			System.out.print(getSequence());
 		}
 		else{
 			System.out.print("ERROR");
 
 		}
 	}
+
+
 
 	private boolean isAdjacent(TileGUI tile){
 		if(sequenceCount == 0){
@@ -60,10 +71,10 @@ public class BoardPanel extends JPanel{
 			int endRow = tileLocation.getRow()+1<boardDimension?tileLocation.getRow()+1:boardDimension-1;
 			int endColumn = tileLocation.getColumn()+1<boardDimension?tileLocation.getColumn()+1:boardDimension-1;
 
-			System.out.println("start row"+startRow);
-			System.out.println("start column"+startColumn);
-			System.out.println("end row"+endRow);
-			System.out.println("end col"+endColumn);
+			// System.out.println("start row"+startRow);
+			// System.out.println("start column"+startColumn);
+			// System.out.println("end row"+endRow);
+			// System.out.println("end col"+endColumn);
 
 			for(int row = startRow; row<=endRow; row++){
 				for(int column = startColumn; column<=endColumn; column++){

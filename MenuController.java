@@ -28,6 +28,11 @@ public class MenuController{
 		MainController.showHighscores();
 	}
 
+	public static void hideScores(){
+		displayMenu();
+		MainController.hideHighscores();
+	}
+
 	public static void logout(){
 		menuWindow.dispose();
 		MainController.showLogin();

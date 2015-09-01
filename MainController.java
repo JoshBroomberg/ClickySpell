@@ -26,4 +26,8 @@ public class MainController{
 		PlayerController.displayScores();
 	}
 
+	public static void hideHighscores(){
+		PlayerController.hideScores();
+	}
+
 }

@@ -9,7 +9,7 @@ public class MenuView extends JPanel{
 	public MenuView(){
 		super(new FlowLayout());
 		playGameButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.SHOW_GAME));
-		viewHighscoresButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.HIGH_SCORES));
+		viewHighscoresButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.SHOW_HIGH_SCORES));
 		logoutButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.LOG_OUT));
 
 		this.add(playGameButton);

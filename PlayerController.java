@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.*;
 
 
 public class PlayerController{
@@ -13,6 +15,7 @@ public class PlayerController{
 	static JFrame highscoreWindow = new JFrame("Your high scores");
 
 	public PlayerController(){
+		readPlayers();
 		displayLogin();
 	}
 
@@ -34,6 +37,10 @@ public class PlayerController{
         highscoreWindow.setVisible(true);
 	}
 
+	public static void hideScores(){
+		highscoreWindow.dispose();
+	}
+
 	public static void addPlayer(){
 		String username = JOptionPane.showInputDialog(loginWindow, "Enter your desired username");
 		String password = JOptionPane.showInputDialog(loginWindow, "Enter your desired password");
@@ -42,7 +49,8 @@ public class PlayerController{
 			players[playerCount]=toSave;
 			playerCount++;
 			loginPlayer(toSave);
-			JOptionPane.showMessageDialog(loginWindow, "Player created and logged in", "Info:", JOptionPane.INFORMATION_MESSAGE);
+			writePlayers();
+			JOptionPane.showMessageDialog(null, "Player created and logged in", "Info:", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else{
 			JOptionPane.showMessageDialog(loginWindow, "A user with that username exists", "Error", JOptionPane.ERROR_MESSAGE);
@@ -52,6 +60,7 @@ public class PlayerController{
 
 	public static void registerNewScore(int score, Score.GameType gameType){
 		activePlayer1.addScore(score,gameType);
+		writePlayers();
 	}
 
 	public static Player findPlayer(String username){
@@ -91,5 +100,55 @@ public class PlayerController{
 		activePlayer1 = player;
 		loginWindow.dispose();
 		MainController.showMenu();
+	}
+
+	private static void writePlayers(){
+		PrintWriter pr;
+		try{
+			pr = new PrintWriter(new FileWriter("players.txt"));
+			for(int i = 0; i<playerCount; i++){
+				pr.println(players[i].toString());
+			}
+			pr.close();
+		}
+		catch(IOException e){
+
+		}
+	}
+
+	private static void readPlayers(){
+		BufferedReader br;
+		try{
+			br = new BufferedReader(new FileReader("players.txt"));
+			String line = br.readLine();
+			while(line!=null){
+				StringTokenizer st = new StringTokenizer(line, "#");
+				String username = st.nextToken();
+				String password = st.nextToken();
+				Score[] scoresArr = null;
+				int scoreCount=0;
+				if(st.hasMoreTokens()){
+					String scores=st.nextToken();
+					scoresArr = new Score[1000];
+					StringTokenizer sv = new StringTokenizer(scores, "&");
+					while(sv.hasMoreTokens()){
+						scoresArr[scoreCount] = new Score(Integer.parseInt(sv.nextToken()), Score.GameType.valueOf(sv.nextToken()));
+						scoreCount++;
+					}
+				}
+				if(scoreCount>0){
+					players[playerCount] = new Player(username, password, scoresArr, scoreCount);
+					playerCount++;
+				}else{
+					players[playerCount] = new Player(username, password);
+					playerCount++;
+
+				}
+				line = br.readLine();
+			}
+
+		}catch(IOException e){
+
+		}
 	}
 }

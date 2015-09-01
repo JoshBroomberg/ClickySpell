@@ -4,17 +4,24 @@ public class Player{
 	private Score[] scores;
 	private int scoreCount;
 
-	public Player(String username, String password){
+	public Player(String username, String password, Score[] scores, int scoreCount){
 		this.username = username;
 		this.password = password;
-		this.scores = new Score[1000];
 		this.scoreCount = scoreCount;
+		this.scores = new Score[1000];
+		for(int i =0; i<scoreCount; i++){
+			this.scores[i] = scores[i];
+		}
+	}
+
+	public Player(String username, String password){
+		this(username, password, new Score[1000], 0);
 	}
 
 	private void sortScores(){
 		for(int i =0; i<scoreCount-1; i++){
 			for(int j = i+1; j<scoreCount; j++){
-				if(scores[j].getScore()<scores[i].getScore()){
+				if(scores[j].getScore()>scores[i].getScore()){
 					Score temp = scores[i];
 					scores[i] = scores[j];
 					scores[j] = temp;
@@ -25,7 +32,6 @@ public class Player{
 
 	public Score[] getMaxScores(int number, Score.GameType mode){
 		sortScores();
-
 		Score [] highScores = new Score[number];
 		int highScoreCount = 0;
 
@@ -53,5 +59,17 @@ public class Player{
 	}
 	public String getPassword(){
 		return password;
+	}
+
+	public String toString(){
+		String toReturn = "";
+		toReturn = username+"#"+password+"#";
+		for(int i =0; i<scoreCount; i++){
+			toReturn+=scores[i].getScore()+"&"+scores[i].getType().name()+"&";
+		}
+		if(scoreCount>0){
+			toReturn+="#";
+		}
+		return toReturn;
 	}
 }

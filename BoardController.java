@@ -36,6 +36,10 @@ public class BoardController{
 		return tiles;
 	}
 
+	public int getBoardSize(){
+		return boardDimension;
+	}
+
 	
 
 	public boolean handleLetterClick(int id){

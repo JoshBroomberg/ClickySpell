@@ -2,34 +2,31 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ScoreView extends JPanel{
-	JButton loginButton = new JButton("Back");
+	JButton backButton = new JButton("Back");
 	
 	public ScoreView(Player player){
 		super(new BorderLayout());
-		JTable table = createTable();
+		backButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.HIDE_HIGH_SCORES));
+		Score[] scores = player.getMaxScores(10, Score.GameType.ARCADE);
+		JTable table = createTable(scores);
 		JScrollPane scrollPane = new JScrollPane(table);
 		this.add(scrollPane, BorderLayout.NORTH);
+		this.add(backButton, BorderLayout.SOUTH);
 	}
 
-	public JTable createTable(){
-		String[] columnNames = {"First Name",
-		"Last Name",
-		"Sport",
-		"# of Years",
-		"Vegetarian"};
+	public JTable createTable(Score[] scores){
+		String[] columnNames = {"Rank",
+		"Score"};
 
-		Object[][] data = {
-			{"Kathy", "Smith",
-			"Snowboarding", new Integer(5), new Boolean(false)},
-			{"John", "Doe",
-			"Rowing", new Integer(3), new Boolean(true)},
-			{"Sue", "Black",
-			"Knitting", new Integer(2), new Boolean(false)},
-			{"Jane", "White",
-			"Speed reading", new Integer(20), new Boolean(true)},
-			{"Joe", "Brown",
-			"Pool", new Integer(10), new Boolean(false)}
-		};
+		Object[][] data = new Object[scores.length][2];
+		for(int i=0; i<scores.length; i++){
+			data[i][0]=i+1;
+			if(scores[i]!=null){
+			data[i][1]=scores[i].getScore();
+			}else{
+				data[i][1]= "-";
+			}
+		}
 
 		JTable table = new JTable(data, columnNames);
 

@@ -32,4 +32,9 @@ public class Tile {
     public String toString() {
         return "("+letter+", "+value+")";
     }
+
+    // public Tile blankTile(){
+    //     Tile blank = new Tile(' ', 0);
+    //     return blank;
+    // }
 }

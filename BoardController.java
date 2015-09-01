@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.NoSuchElementException;
 
 public class BoardController{
 	private int boardDimension;
@@ -59,7 +60,7 @@ public class BoardController{
 	public boolean validateWord(String word){
 		
 		if(wordController.isWord(word)){
-			clearUsedTiles();
+			
 			return true;
 			
 		}
@@ -76,18 +77,41 @@ public class BoardController{
 		return word;
 	}
 
-	private void clearUsedTiles(){ //needs to account for running out of tiles
+	public void clearUsedTiles(){ //needs to account for running out of tiles
 		for(int i =0; i<sequenceCount; i++){
 			int tileID = (int)sequence[i].getClientProperty("id");
+			try{
 			TileGUI newTile = new TileGUI(letters.removeOne());
 			newTile.setForeground(Color.black);
 			newTile.putClientProperty("id", tileID);
 			newTile.addActionListener(new TileClickHandler(tileID));
 			Coordinate coordinate = tileLocation(tileID);
 			tiles[coordinate.getRow()][coordinate.getColumn()] = newTile;
+			}
+			catch(NoSuchElementException e){
+				sequence[i].setEnabled(false);
+				sequence[i].setText("");
+			}
 			sequence[i]=null;
 		}
 		sequenceCount=0;
+	}
+
+	public int scoreSequence(){
+		int score = 0;
+		for(int i =0; i<sequenceCount; i++){
+			score+=sequence[i].getTile().value();
+		}
+		return score;
+	}
+
+	public void reset(){
+		for(int i =0; i<sequenceCount; i++){
+			sequence[i].setForeground(Color.black);
+			sequence[i] = null;
+		}
+		sequenceCount =0;
+
 	}
 
 	private boolean inSequence(TileGUI tile){

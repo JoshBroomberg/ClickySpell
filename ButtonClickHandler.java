@@ -15,6 +15,7 @@ public class ButtonClickHandler implements ActionListener{
   			break;
 
   			case 2:
+  				GameController.resetSelection();
   			break;
 
   			case 3:

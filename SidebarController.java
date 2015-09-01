@@ -9,7 +9,8 @@ public class SidebarController{
 		currentScore+=scoreIncrement;
 	}
 
-	public void updateDisplay(){
-		
+	public String getScore(){
+		Integer wrapperInt = currentScore;
+		return wrapperInt.toString();
 	}
 }

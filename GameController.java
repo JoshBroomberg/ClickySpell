@@ -4,11 +4,11 @@ import java.awt.*;
 
 
 public class GameController{
-	static BoardController boardController = new BoardController(6);
+	static BoardController boardController = new BoardController(9);
 	static BoardView boardView;
 
 	static SidebarController sidebarController= new SidebarController();
-	static SidebarView sidebarView= new SidebarView();
+	static SidebarView sidebarView;
 
 
 	static JFrame frame = new JFrame("Letters game");
@@ -26,7 +26,8 @@ public class GameController{
 
 	public static void updateBoard(){
 		frame.getContentPane().removeAll();
-		boardView = new BoardView(6, boardController.getBoard());
+		boardView = new BoardView(9, boardController.getBoard());
+		sidebarView = new SidebarView(sidebarController.getScore());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 	    frame.pack();
@@ -43,11 +44,18 @@ public class GameController{
 		String word = boardController.getSequence().toLowerCase();
 		boolean validword = boardController.validateWord(word);
 		if(validword){
-			JOptionPane.showMessageDialog(frame, "Congrats, "+word+" is a word", "info:", JOptionPane.INFORMATION_MESSAGE);
+			int score = boardController.scoreSequence();
+			JOptionPane.showMessageDialog(frame, "Congrats, "+word+" is a word. \nYou scored: "+score+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+			sidebarController.incrementScore(score);
+			boardController.clearUsedTiles();
 			updateBoard();
 		}
 		else{
 			JOptionPane.showMessageDialog(frame, "Invalid word", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public static void resetSelection(){
+		boardController.reset();
 	}
 }

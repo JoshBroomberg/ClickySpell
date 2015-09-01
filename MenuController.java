@@ -23,6 +23,11 @@ public class MenuController{
 		MainController.showGame();
 	}
 
+	public static void showScores(){
+		menuWindow.dispose();
+		MainController.showHighscores();
+	}
+
 	public static void logout(){
 		menuWindow.dispose();
 		MainController.showLogin();

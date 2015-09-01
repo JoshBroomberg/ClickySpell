@@ -67,7 +67,13 @@ public class GameController{
 		boardController.reset();
 	}
 
+	private static void endGame(){
+		int score = Integer.parseInt(sidebarController.getScore());
+		PlayerController.registerNewScore(score, Score.GameType.ARCADE);
+	}
+
 	public static void exit(){
+		endGame();
 		frame.dispose();
 		MainController.showMenu();
 	}

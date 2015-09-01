@@ -7,9 +7,10 @@ public class PlayerController{
 	private static Player[] players = new Player[1000];
 	private static int playerCount=0;
 	private static Player activePlayer1;
-	private static Player activePlayer2;
+	//private static Player activePlayer2;
 
 	static JFrame loginWindow = new JFrame("Login to letters game");
+	static JFrame highscoreWindow = new JFrame("Your high scores");
 
 	public PlayerController(){
 		displayLogin();
@@ -22,6 +23,15 @@ public class PlayerController{
         loginWindow.getContentPane().add(new LoginView());
         loginWindow.pack();
         loginWindow.setVisible(true);
+	}
+
+	public static void displayScores(){
+		highscoreWindow.getContentPane().removeAll();
+		highscoreWindow.getContentPane().setLayout(new BorderLayout());
+        highscoreWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        highscoreWindow.getContentPane().add(new ScoreView(activePlayer1));
+        highscoreWindow.pack();
+        highscoreWindow.setVisible(true);
 	}
 
 	public static void addPlayer(){
@@ -38,6 +48,10 @@ public class PlayerController{
 			JOptionPane.showMessageDialog(loginWindow, "A user with that username exists", "Error", JOptionPane.ERROR_MESSAGE);
 
 		}
+	}
+
+	public static void registerNewScore(int score, Score.GameType gameType){
+		activePlayer1.addScore(score,gameType);
 	}
 
 	public static Player findPlayer(String username){

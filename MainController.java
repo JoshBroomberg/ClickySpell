@@ -22,4 +22,8 @@ public class MainController{
 		new GameController();
 	}
 
+	public static void showHighscores(){
+		PlayerController.displayScores();
+	}
+
 }

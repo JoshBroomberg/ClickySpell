@@ -26,7 +26,7 @@ public class ButtonClickHandler implements ActionListener{
   			break;
 
   			case HIGH_SCORES:
-
+  				MenuController.showScores();
   			break;
 
   			case LOG_OUT:

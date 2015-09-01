@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionListener;
 
 
 public class GameController{
@@ -14,6 +14,8 @@ public class GameController{
 
 
 	static JFrame frame = new JFrame("Letters game");
+	static Score.GameType type;
+	static Timer timer;
 	
 	public static void main(String[] args){
 		new GameController();
@@ -24,13 +26,34 @@ public class GameController{
 	}
 
 	private static void displayGameBoard(){
+
+		int typeChoice = Integer.parseInt(JOptionPane.showInputDialog(
+			"What type of game would you like to play?\n"+
+			"Enter a number from the list below:\n"+
+			"1. Arcade (untimed)\n"+
+			"2. 1 minute timed game "));
+
 		int boardSize = Integer.parseInt(JOptionPane.showInputDialog(
 			"How big would you like the board to be?\n"+
 			"Enter a number between 2 and 9\n"+
 			"2 will yield a 2x2 grid, the hardest\n"+
 			"9 will yield a 9x9 grid, the easiest"));
+		
+		switch(typeChoice){
+			case 1:
+				type = Score.GameType.ARCADE;
+				sidebarController = new SidebarController(false);
+			break;
+
+			case 2:
+				type = Score.GameType.TIMED;
+				timer = new Timer(1000, new TimerListener());
+				sidebarController = new SidebarController(true);
+				timer.start();
+			break;
+		}
+
 		boardController = new BoardController(boardSize);
-		sidebarController = new SidebarController();
 		frame.getContentPane().setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         updateBoard();
@@ -40,7 +63,7 @@ public class GameController{
 	public static void updateBoard(){
 		frame.getContentPane().removeAll();
 		boardView = new BoardView(boardController.getBoardSize(), boardController.getBoard());
-		sidebarView = new SidebarView(sidebarController.getScore(), boardController.getRemainingLetters(), boardController.getWordCount());
+		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), boardController.getRemainingLetters(), boardController.getWordCount());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 	    frame.pack();
@@ -51,6 +74,10 @@ public class GameController{
 		if(!validClick){
 			JOptionPane.showMessageDialog(frame, "Invalid click", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+
+	public static void tick(String secondsRemaining){
+		sidebarView.setTime(secondsRemaining);
 	}
 
 	public static void checkWord(){
@@ -78,7 +105,11 @@ public class GameController{
 	}
 
 	public static void exit(){
+		if(type==Score.GameType.TIMED){
+			timer.stop();
+		}
 		endGame();
+		JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
 		frame.dispose();
 		MainController.showMenu();
 	}

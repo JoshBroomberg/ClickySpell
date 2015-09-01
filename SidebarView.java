@@ -18,6 +18,7 @@ public class SidebarView extends JPanel{
 
 	JButton checkWord = new JButton("Check word");
 	JButton resetSelection = new JButton("Reset selection");
+	JButton endGame = new JButton("Exit and end game");
 	JPanel gameplayPanel = new JPanel(new FlowLayout());
 	public SidebarView(String score, String lettersRemaining, String wordsMade){
 		super();
@@ -47,10 +48,12 @@ public class SidebarView extends JPanel{
 
 		
 		gameplayPanel.setPreferredSize(new Dimension(200, 150));
-		checkWord.addActionListener(new ButtonClickHandler(1));
-		resetSelection.addActionListener(new ButtonClickHandler(2));
+		checkWord.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.CHECK_WORD));
+		resetSelection.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.RESET_SELECTION));
+		endGame.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.EXIT_GAME));
 		gameplayPanel.add(checkWord);
 		gameplayPanel.add(resetSelection);
+		gameplayPanel.add(endGame);
 		
 		this.add(gameplayPanel, BorderLayout.CENTER);
 	}

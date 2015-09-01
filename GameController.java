@@ -4,20 +4,28 @@ import java.awt.*;
 
 
 public class GameController{
-	static BoardController boardController = new BoardController(9);
+	static BoardController boardController;
 	static BoardView boardView;
 
-	static SidebarController sidebarController= new SidebarController();
+	static SidebarController sidebarController;
 	static SidebarView sidebarView;
+
+	//static PlayerController playerController = new PlayerController();
 
 
 	static JFrame frame = new JFrame("Letters game");
+	
 	public static void main(String[] args){
 		new GameController();
-		
 	}
 
 	public GameController(){
+		 boardController = new BoardController(9);
+		 sidebarController = new SidebarController();
+		 displayGameBoard();
+	}
+
+	private static void displayGameBoard(){
 		frame.getContentPane().setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         updateBoard();
@@ -57,5 +65,10 @@ public class GameController{
 
 	public static void resetSelection(){
 		boardController.reset();
+	}
+
+	public static void exit(){
+		frame.dispose();
+		MainController.showMenu();
 	}
 }

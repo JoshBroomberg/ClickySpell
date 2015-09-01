@@ -2,7 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonClickHandler implements ActionListener{ 
-	public static enum Actions{CHECK_WORD, RESET_SELECTION, LOGIN, LOG_OUT,ADD_PLAYER, SHOW_GAME, EXIT_GAME, SHOW_HIGH_SCORES, HIDE_HIGH_SCORES}
+	public static enum Actions{CHECK_WORD, RESET_SELECTION, SHUFFLE, LOGIN, LOG_OUT,ADD_PLAYER, SHOW_GAME, EXIT_GAME, SHOW_HIGH_SCORES, HIDE_HIGH_SCORES}
 	Actions actionID;
 
 
@@ -47,6 +47,10 @@ public class ButtonClickHandler implements ActionListener{
 
   			case RESET_SELECTION:
   				GameController.resetSelection();
+  			break;
+
+  			case SHUFFLE:
+  				GameController.shuffle();
   			break;
 
   			

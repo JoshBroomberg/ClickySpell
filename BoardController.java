@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.NoSuchElementException;
+import java.util.*;
 
 public class BoardController{
 	private int boardDimension;
@@ -40,6 +41,9 @@ public class BoardController{
 		return boardDimension;
 	}
 
+	public void shuffle(){
+		Collections.shuffle(Arrays.asList(tiles));
+	}
 	
 
 	public boolean handleLetterClick(int id){

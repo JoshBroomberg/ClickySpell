@@ -67,6 +67,13 @@ public class GameController{
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 	    frame.pack();
+	    //frame.setSize(600, 470);
+	}
+
+	public static void shuffle(){
+		resetSelection();
+		boardController.shuffle();
+		updateBoard();
 	}
 
 	public static void tileClick(int id){
@@ -101,7 +108,7 @@ public class GameController{
 
 	private static void endGame(){
 		int score = Integer.parseInt(sidebarController.getScore());
-		PlayerController.registerNewScore(score, Score.GameType.ARCADE);
+		PlayerController.registerNewScore(score, type);
 	}
 
 	public static void exit(){

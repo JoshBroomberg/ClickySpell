@@ -7,10 +7,32 @@ public class ScoreView extends JPanel{
 	public ScoreView(Player player){
 		super(new BorderLayout());
 		backButton.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.HIDE_HIGH_SCORES));
-		Score[] scores = player.getMaxScores(10, Score.GameType.ARCADE);
-		JTable table = createTable(scores);
-		JScrollPane scrollPane = new JScrollPane(table);
-		this.add(scrollPane, BorderLayout.NORTH);
+		
+
+		JPanel arcadePanel = new JPanel();
+		BoxLayout arcadeLayout = new BoxLayout(arcadePanel, BoxLayout.Y_AXIS);
+		arcadePanel.setLayout(arcadeLayout);
+		JLabel arcadeLabel = new JLabel("Arcade mode highscores");
+
+		Score[] arcadescores = player.getMaxScores(10, Score.GameType.ARCADE);
+		JTable arcadetable = createTable(arcadescores);
+		JScrollPane arcadescrollPane = new JScrollPane(arcadetable);
+		arcadePanel.add(arcadeLabel);
+		arcadePanel.add(arcadescrollPane);
+		this.add(arcadePanel, BorderLayout.WEST);
+
+		JPanel timedPanel = new JPanel();
+		BoxLayout timedLayout = new BoxLayout(timedPanel, BoxLayout.Y_AXIS);
+		timedPanel.setLayout(timedLayout);
+		JLabel timedLabel = new JLabel("Timed mode highscores");
+
+		Score[] timedscores = player.getMaxScores(10, Score.GameType.TIMED);
+		JTable timedtable = createTable(timedscores);
+		JScrollPane timedscrollPane = new JScrollPane(timedtable);
+		timedPanel.add(timedLabel);
+		timedPanel.add(timedscrollPane);
+		this.add(timedPanel,BorderLayout.EAST);
+
 		this.add(backButton, BorderLayout.SOUTH);
 	}
 

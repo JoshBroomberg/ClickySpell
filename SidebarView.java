@@ -20,6 +20,7 @@ public class SidebarView extends JPanel{
 
 	JButton checkWord = new JButton("Check word");
 	JButton resetSelection = new JButton("Reset selection");
+	JButton shuffle = new JButton("Shuffle letters");
 	JButton endGame = new JButton("Exit and end game");
 	JPanel gameplayPanel = new JPanel(new FlowLayout());
 	public SidebarView(boolean timed, String timeRemaining, String score, String lettersRemaining, String wordsMade){
@@ -29,13 +30,17 @@ public class SidebarView extends JPanel{
 		this.setPreferredSize(new Dimension(200, 400));
 		this.add(Box.createRigidArea(new Dimension(200,40)));
 
-		gameplayPanel.setPreferredSize(new Dimension(200, 150));
+		gameplayPanel.setPreferredSize(new Dimension(200, 250));
 		checkWord.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.CHECK_WORD));
 		resetSelection.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.RESET_SELECTION));
 		endGame.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.EXIT_GAME));
+		shuffle.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.SHUFFLE));
 		gameplayPanel.add(checkWord);
+		gameplayPanel.add(shuffle);
 		gameplayPanel.add(resetSelection);
+		//gameplayPanel.add(Box.createRigidArea(new Dimension(200,40)));
 		gameplayPanel.add(endGame);
+
 		
 		this.add(gameplayPanel, BorderLayout.CENTER);
 
@@ -59,7 +64,7 @@ public class SidebarView extends JPanel{
 			statsPanel.add(timeLabel);
 			statsPanel.add(timeField);
 		}
-		statsPanel.add(Box.createRigidArea(new Dimension(200,60)));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,30)));
 		this.add(statsPanel, BorderLayout.NORTH);
 
 		

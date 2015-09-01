@@ -27,7 +27,7 @@ public class GameController{
 	public static void updateBoard(){
 		frame.getContentPane().removeAll();
 		boardView = new BoardView(9, boardController.getBoard());
-		sidebarView = new SidebarView(sidebarController.getScore());
+		sidebarView = new SidebarView(sidebarController.getScore(), boardController.getRemainingLetters(), boardController.getWordCount());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 	    frame.pack();

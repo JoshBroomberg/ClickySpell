@@ -7,6 +7,7 @@ public class BoardController{
 	private TileGUI[][] tiles;
 	private TileGUI[] sequence;
 	private int sequenceCount = 0;
+	private int wordCount =0;
 
 	static WordController wordController = new WordController();
 
@@ -60,13 +61,18 @@ public class BoardController{
 	public boolean validateWord(String word){
 		
 		if(wordController.isWord(word)){
-			
+			wordCount++;
 			return true;
 			
 		}
 		else{
 			return false;
 		}
+	}
+
+	public String getWordCount(){
+		Integer wordCount = this.wordCount;
+		return wordCount.toString();
 	}
 
 	public String getSequence(){
@@ -112,6 +118,11 @@ public class BoardController{
 		}
 		sequenceCount =0;
 
+	}
+
+	public String getRemainingLetters(){
+		Integer lettersRemaining = letters.size();
+		return lettersRemaining.toString();
 	}
 
 	private boolean inSequence(TileGUI tile){

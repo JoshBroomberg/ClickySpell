@@ -46,10 +46,11 @@ This is the user manual for the letters game. It covers 3 sections:
 		"high score" - this is your high score in the current mode
 		"words made" - this is a count of the number of words made in your current game
 		"letters in the bag" - this is the number of letters remaining 'in the bag'. That is letters not shown no the board that will be placed on the board when you use up letters. 
+		"current sequence" - shows the word you have created via tile selection. The color of this field pre-emptively indicates the validity of a word. It is red if your selection makes for an invalid word and green if you have made a valid word.
 		<optionally> "time remaing" - if you are in timed mode this shows the seconds left. 
 
 		Option buttons:
-		"Check word" - checks if current selection is valid word.
+		"submit word" - checks if current selection is valid word.
 		"shuffle letters" - moves the letters on the board into new random positions
 		"reset selection" - clears the current selection. 
 		"exit and end game" - ends the game and records your score. 
@@ -58,7 +59,7 @@ This is the user manual for the letters game. It covers 3 sections:
 
 	The game window is where the game is played. Click tiles in order to construct words. When a valid tile is clicked, it will turn red. If you click a tile that is not adjacent to the last tile in the sequence or click a tile in the sequence that is not the last tile you will be told you have made an invalid click.
 
-	Once you have constructed a word, click "check word" in the game play panel to check your word. If it is valid, you will be told so and told the points you received. When you click ok, or press enter, the game will continue. The points you got from the word will be added to the score display and the letters you used will be replaced by new letters from the bag. Reducing the "letters left in bag" count. If there are no letters in the bag, the letters used will be replaced with empty, unusable squares.  If the word ou created is not valid you will be told so and allowed to continue playing with the same sequence. 
+	Once you have constructed a word, click "submit word" in the game play panel to check your word. If it is valid, you will be told so and told the points you received. When you click ok, or press enter, the game will continue. The points you got from the word will be added to the score display and the letters you used will be replaced by new letters from the bag. Reducing the "letters left in bag" count. If there are no letters in the bag, the letters used will be replaced with empty, unusable squares.  If the word ou created is not valid you will be told so and allowed to continue playing with the same sequence. 
 
 	If you have made a mistake in yur sequence you can do one of two things. Either you can click on the last letter in the sequence to remove it from the sequence or you can click "reset sequence" which clears your selection. 
 

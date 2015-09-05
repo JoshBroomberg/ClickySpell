@@ -16,13 +16,13 @@ public class SidebarView extends JPanel{
 	JTextField lettersField = new JTextField();
 	JLabel timeLabel = new JLabel("Time remaining");
 	JTextField timeField = new JTextField();
-	JLabel sequenceLabel = new JLabel("Current sequence");
+	JLabel sequenceLabel = new JLabel("Current sequence:");
 	JTextField sequenceField = new JTextField();
 
 
 	JPanel statsPanel = new JPanel(new FlowLayout());
 
-	JButton checkWord = new JButton("Check word");
+	JButton checkWord = new JButton("submit word");
 	JButton resetSelection = new JButton("Reset selection");
 	JButton shuffle = new JButton("Shuffle letters");
 	JButton endGame = new JButton("Exit and end game");
@@ -53,7 +53,7 @@ public class SidebarView extends JPanel{
 		highScoreField.setText(highScore);
 		sequenceField.setText(sequence);
 
-		statsPanel.setPreferredSize(new Dimension(200, 230));
+		statsPanel.setPreferredSize(new Dimension(200, 250));
 		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(scoreLabel);
 		statsPanel.add(scoreField);
@@ -68,6 +68,7 @@ public class SidebarView extends JPanel{
 		statsPanel.add(lettersField);
 		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(sequenceLabel);
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(sequenceField);
 		if(timed){
 			timeField.setText(timeRemaining);
@@ -84,5 +85,17 @@ public class SidebarView extends JPanel{
 
 	public void setTime(String secondsRemaining){
 		timeField.setText(secondsRemaining);
+	}
+	public void setSequence(String sequence){
+		sequenceField.setText(sequence);
+	}
+	public void validWordColor(){
+		sequenceField.setBackground(Color.green);
+	}
+	public void invalidWordColor(){
+		sequenceField.setBackground(Color.red);
+	}
+	public void resetColor(){
+		sequenceField.setBackground(Color.white);
 	}
 }

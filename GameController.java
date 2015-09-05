@@ -126,6 +126,19 @@ public class GameController{
 		if(!validClick){
 			JOptionPane.showMessageDialog(frame, "Invalid click", "Error", JOptionPane.ERROR_MESSAGE);
 		}
+		sidebarView.setSequence( boardController.getSequence());
+		String word = boardController.getSequence().toLowerCase();
+		if(word.length()>0){
+			boolean validword = boardController.validateWord(word);
+			if(validword){
+				sidebarView.validWordColor();
+			}else{
+				sidebarView.invalidWordColor();
+			}
+		}
+		else{
+			sidebarView.resetColor();
+		}
 	}
 
 	public static void tick(String secondsRemaining){
@@ -149,6 +162,8 @@ public class GameController{
 
 	public static void resetSelection(){
 		boardController.reset();
+		sidebarView.setSequence("");
+		sidebarView.resetColor();
 	}
 
 	private static boolean endGame(){

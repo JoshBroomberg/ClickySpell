@@ -16,6 +16,8 @@ public class SidebarView extends JPanel{
 	JTextField lettersField = new JTextField();
 	JLabel timeLabel = new JLabel("Time remaining");
 	JTextField timeField = new JTextField();
+	JLabel sequenceLabel = new JLabel("Current sequence");
+	JTextField sequenceField = new JTextField();
 
 
 	JPanel statsPanel = new JPanel(new FlowLayout());
@@ -26,7 +28,7 @@ public class SidebarView extends JPanel{
 	JButton endGame = new JButton("Exit and end game");
 	JPanel gameplayPanel = new JPanel(new FlowLayout());
 
-	public SidebarView(boolean timed, String timeRemaining, String score, String highScore, String lettersRemaining, String wordsMade){
+	public SidebarView(boolean timed, String timeRemaining, String score, String highScore, String lettersRemaining, String wordsMade, String sequence){
 		super();
 		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(new BorderLayout());
@@ -49,6 +51,7 @@ public class SidebarView extends JPanel{
 		lettersField.setText(lettersRemaining);
 		wordsField.setText(wordsMade);
 		highScoreField.setText(highScore);
+		sequenceField.setText(sequence);
 
 		statsPanel.setPreferredSize(new Dimension(200, 230));
 		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
@@ -63,6 +66,9 @@ public class SidebarView extends JPanel{
 		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(lettersLabel);
 		statsPanel.add(lettersField);
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
+		statsPanel.add(sequenceLabel);
+		statsPanel.add(sequenceField);
 		if(timed){
 			timeField.setText(timeRemaining);
 			statsPanel.add(Box.createRigidArea(new Dimension(200,5)));

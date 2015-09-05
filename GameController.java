@@ -109,7 +109,7 @@ public class GameController{
 	public static void updateBoard(){
 		frame.getContentPane().removeAll();
 		boardView = new BoardView(boardController.getBoardSize(), boardController.getBoard());
-		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), sidebarController.getHighScore(), boardController.getRemainingLetters(), boardController.getWordCount());
+		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), sidebarController.getHighScore(), boardController.getRemainingLetters(), boardController.getWordCount(), boardController.getSequence());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 		frame.pack();

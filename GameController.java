@@ -79,7 +79,7 @@ public class GameController{
 			type = Score.GameType.TIMED;
 			timer = new Timer(1000, new TimerListener());
 			sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
-			timer.start();
+			
 			break;
 
 			default:
@@ -99,6 +99,11 @@ public class GameController{
 		frame.setResizable(false);
 		updateBoard();
 		frame.setVisible(true);
+
+		if(typeChoice==2){
+			JOptionPane.showMessageDialog(frame, "Click ok when you are ready to start", "info:", JOptionPane.INFORMATION_MESSAGE);
+			timer.start();
+		}
 	}
 
 	public static void updateBoard(){

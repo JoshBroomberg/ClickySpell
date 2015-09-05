@@ -1,6 +1,9 @@
 import javax.swing.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
+import java.awt.image.*;
+import javax.imageio.*;
 import java.io.*;
 import java.util.*;
 
@@ -14,27 +17,44 @@ public class PlayerController{
 	static JFrame loginWindow = new JFrame("Login to letters game");
 	static JFrame highscoreWindow = new JFrame("Your high scores");
 
+
 	public PlayerController(){
 		readPlayers();
 		displayLogin();
 	}
 
 	private static void displayLogin(){
+		JPanel header = new JPanel(new BorderLayout());
+		header.setBorder(new EmptyBorder(50, 100, 0, 0));
+		JLabel gameTitle = new JLabel("<html><strong><i>Letters Game</i></strong></html>");
+		header.add(gameTitle, BorderLayout.CENTER);
+
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(new File("2.jpeg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Image dimg = img.getScaledInstance(800, 508, Image.SCALE_SMOOTH);
+		ImageIcon imageIcon = new ImageIcon(dimg);
+		loginWindow.setContentPane(new JLabel(imageIcon));
 		loginWindow.getContentPane().removeAll();
 		loginWindow.getContentPane().setLayout(new BorderLayout());
-        loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        loginWindow.getContentPane().add(new LoginView());
-        loginWindow.pack();
-        loginWindow.setVisible(true);
+		loginWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		loginWindow.getContentPane().add(header, BorderLayout.NORTH);
+		loginWindow.getContentPane().add(new LoginView(), BorderLayout.CENTER);
+		loginWindow.setResizable(false);
+		loginWindow.setSize(285,325);
+		loginWindow.setVisible(true);
 	}
 
 	public static void displayScores(){
 		highscoreWindow.getContentPane().removeAll();
 		highscoreWindow.getContentPane().setLayout(new BorderLayout());
-        highscoreWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        highscoreWindow.getContentPane().add(new ScoreView(activePlayer1));
-        highscoreWindow.pack();
-        highscoreWindow.setVisible(true);
+		highscoreWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		highscoreWindow.getContentPane().add(new ScoreView(activePlayer1));
+		highscoreWindow.pack();
+		highscoreWindow.setVisible(true);
 	}
 
 	public static void hideScores(){

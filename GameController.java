@@ -10,9 +10,6 @@ public class GameController{
 	static SidebarController sidebarController;
 	static SidebarView sidebarView;
 
-	//static PlayerController playerController = new PlayerController();
-
-
 	static JFrame frame = new JFrame("Letters game");
 	static Score.GameType type;
 	static Timer timer;
@@ -67,7 +64,6 @@ public class GameController{
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 	    frame.pack();
-	    //frame.setSize(600, 470);
 	}
 
 	public static void shuffle(){

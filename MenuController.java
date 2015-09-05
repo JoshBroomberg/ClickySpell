@@ -1,5 +1,5 @@
 import javax.swing.*;
-import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 
 
@@ -11,16 +11,24 @@ public class MenuController{
 	}
 
 	private static void displayMenu(){
+		JPanel header = new JPanel(new BorderLayout());
+	    header.setBorder(new EmptyBorder(50, 100, 0, 0));
+		JLabel gameTitle = new JLabel("<html><strong><i>Main Menu</i></strong></html>");
+		header.add(gameTitle, BorderLayout.CENTER);
+
 		menuWindow.getContentPane().removeAll();
 		menuWindow.getContentPane().setLayout(new BorderLayout());
         menuWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuWindow.getContentPane().add(new MenuView());
-        menuWindow.pack();
+        menuWindow.getContentPane().add(header,BorderLayout.NORTH);
+        menuWindow.getContentPane().add(new MenuView(),BorderLayout.CENTER);
+        menuWindow.setSize(290, 275);
+        menuWindow.setResizable(false);
         menuWindow.setVisible(true);
 	}
 	public static void showGame(){
-		menuWindow.dispose();
+		
 		MainController.showGame();
+		menuWindow.dispose();
 	}
 
 	public static void showScores(){

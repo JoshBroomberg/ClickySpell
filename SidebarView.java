@@ -32,9 +32,9 @@ public class SidebarView extends JPanel{
 		super();
 		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(200, 400));
+		this.setPreferredSize(new Dimension(200, 500));
 		this.add(Box.createRigidArea(new Dimension(200,10)));
-		gameplayPanel.setPreferredSize(new Dimension(200, 400));
+		gameplayPanel.setPreferredSize(new Dimension(200, 300));
 		checkWord.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.CHECK_WORD));
 		resetSelection.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.RESET_SELECTION));
 		endGame.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.EXIT_GAME));
@@ -53,7 +53,7 @@ public class SidebarView extends JPanel{
 		highScoreField.setText(highScore);
 		sequenceField.setText(sequence);
 
-		statsPanel.setPreferredSize(new Dimension(200, 250));
+		statsPanel.setPreferredSize(new Dimension(200, 350));
 		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(scoreLabel);
 		statsPanel.add(scoreField);

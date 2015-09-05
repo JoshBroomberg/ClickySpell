@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.util.NoSuchElementException;
 import java.util.*;
+import javax.swing.*;
 
 public class BoardController{
 	private int boardDimension;
@@ -13,7 +14,7 @@ public class BoardController{
 	static WordController wordController = new WordController();
 
 	public BoardController(int dimension){
-		//super(new GridLayout(dimension,dimension)); //create JPanel with grid layout set to dimension spec 
+		 
 		boardDimension = dimension;
 		tiles = new TileGUI[dimension][dimension]; //create tile 2D array with size matching dimensions
 		sequence = new TileGUI[(int)Math.pow(dimension,2)]; //create array to hold selected sequence with size = total tiles possible
@@ -53,6 +54,8 @@ public class BoardController{
 			sequence[sequenceCount] = clickedButton;
 			sequenceCount++;
 			if(sequenceCount>1){
+				//sequence[sequenceCount-2].setDisabledForeground(Color.red); 
+
 				sequence[sequenceCount-2].setEnabled(false);
 			}
 			return true;
@@ -133,6 +136,7 @@ public class BoardController{
 	public void reset(){
 		for(int i =0; i<sequenceCount; i++){
 			sequence[i].setForeground(Color.black);
+			sequence[i].setEnabled(true);
 			sequence[i] = null;
 		}
 		sequenceCount =0;

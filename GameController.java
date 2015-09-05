@@ -23,6 +23,9 @@ public class GameController{
 	}
 
 	private static void displayGameBoard(){
+		// UIManager.getDefaults().put("Button.disabledText",Color.RED);
+		// UIManager.getDefaults().put("Button.disabledShadow", Color.RED);
+
 		int typeChoice =0; 
 		int boardSize=0;
 		boolean validType= false;

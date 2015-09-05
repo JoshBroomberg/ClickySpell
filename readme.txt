@@ -57,7 +57,7 @@ This is the user manual for the letters game. It covers 3 sections:
 
 	How to play:
 
-	The game window is where the game is played. Click tiles in order to construct words. When a valid tile is clicked, it will turn red. If you click a tile that is not adjacent to the last tile in the sequence or click a tile in the sequence that is not the last tile you will be told you have made an invalid click.
+	The game window is where the game is played. Click tiles in order to construct words. When a valid tile is clicked, it will turn red. The last tile clicked will thus be red, while all other tiles in the sequence will be disabled.If you click a tile that is not adjacent to the last tile in the sequence you will be told you have made an invalid click. It sis not possible to click any tile in the sequence that is not the last one. 
 
 	Once you have constructed a word, click "submit word" in the game play panel to check your word. If it is valid, you will be told so and told the points you received. A words score is the sum of the value of each tile as displayed on the tile plus 1 point for each tile used up until 5 letters and 2 points per tile for all tiles after the fifth one. When you click ok, or press enter, the game will continue. The points you got from the word will be added to the score display and the letters you used will be replaced by new letters from the bag. Reducing the "letters left in bag" count. If there are no letters in the bag, the letters used will be replaced with empty, unusable squares.  If the word ou created is not valid you will be told so and allowed to continue playing with the same sequence. 
 

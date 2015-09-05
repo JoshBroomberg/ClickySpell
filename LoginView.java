@@ -3,8 +3,8 @@ import javax.swing.border.*;
 import java.awt.*;
 
 public class LoginView extends JPanel{
-	JButton loginButton = new JButton("Login");
-	JButton newPlayerButton = new JButton("New player");
+	private JButton loginButton = new JButton("Login");
+	private JButton newPlayerButton = new JButton("New player");
 	
 
 	public LoginView(){

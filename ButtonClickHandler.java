@@ -3,7 +3,7 @@ import java.awt.event.ActionListener;
 
 public class ButtonClickHandler implements ActionListener{ 
 	public static enum Actions{CHECK_WORD, RESET_SELECTION, SHUFFLE, LOGIN, LOG_OUT,ADD_PLAYER, SHOW_GAME, EXIT_GAME, SHOW_HIGH_SCORES, HIDE_HIGH_SCORES}
-	Actions actionID;
+	private Actions actionID;
 
 
   	public ButtonClickHandler(Actions actionID){

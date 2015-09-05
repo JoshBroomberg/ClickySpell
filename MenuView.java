@@ -3,9 +3,9 @@ import javax.swing.border.*;
 import java.awt.*;
 
 public class MenuView extends JPanel{
-	JButton playGameButton = new JButton("Play");
-	JButton viewHighscoresButton = new JButton("View high scores");
-	JButton logoutButton = new JButton("Log out");
+	private JButton playGameButton = new JButton("Play");
+	private JButton viewHighscoresButton = new JButton("View high scores");
+	private JButton logoutButton = new JButton("Log out");
 
 	public MenuView(){
 		super(new FlowLayout());

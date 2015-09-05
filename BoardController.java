@@ -52,12 +52,18 @@ public class BoardController{
 			clickedButton.setForeground(Color.red);
 			sequence[sequenceCount] = clickedButton;
 			sequenceCount++;
+			if(sequenceCount>1){
+				sequence[sequenceCount-2].setEnabled(false);
+			}
 			return true;
 		}
 		else if(clickedButton.equals(sequence[sequenceCount-1])){
 			clickedButton.setForeground(Color.black);
 			sequence[sequenceCount-1] = null;
 			sequenceCount--;
+			if(sequenceCount>=1){
+				sequence[sequenceCount-1].setEnabled(true);
+			}
 			return true;
 		}
 		else{
@@ -115,6 +121,11 @@ public class BoardController{
 		int score = 0;
 		for(int i =0; i<sequenceCount; i++){
 			score+=sequence[i].getTile().value();
+			if(i<=4){
+				score+=1;
+			}else{
+				score+=2;
+			}
 		}
 		return score;
 	}

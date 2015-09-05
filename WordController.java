@@ -3,7 +3,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 public class WordController{
-	String[] words;
+	private String[] words;
 	public WordController(){
 		try{
 			words=FileToArray.read("EnglishWords.txt");

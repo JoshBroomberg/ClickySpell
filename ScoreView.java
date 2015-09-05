@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ScoreView extends JPanel{
-	JButton backButton = new JButton("Back");
+	private JButton backButton = new JButton("Back");
 	
 	public ScoreView(Player player){
 		super(new BorderLayout());

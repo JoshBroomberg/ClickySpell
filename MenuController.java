@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 
 public class MenuController{
-	static JFrame menuWindow = new JFrame("Letters game menu");
+	private static JFrame menuWindow = new JFrame("Letters game menu");
 
 	public MenuController(){
 		displayMenu();

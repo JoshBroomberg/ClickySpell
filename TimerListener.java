@@ -2,7 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class TimerListener implements ActionListener{
-    Integer secondsRemaining = 60;
+    private Integer secondsRemaining = 60;
 
     public void actionPerformed(ActionEvent evt){
         secondsRemaining--;

@@ -4,15 +4,15 @@ import java.awt.event.*;
 
 
 public class GameController{
-	static BoardController boardController;
-	static BoardView boardView;
+	private static BoardController boardController;
+	private static BoardView boardView;
 
-	static SidebarController sidebarController;
-	static SidebarView sidebarView;
+	private static SidebarController sidebarController;
+	private static SidebarView sidebarView;
 
-	static JFrame frame = new JFrame("Letters game");
-	static Score.GameType type;
-	static Timer timer;
+	private static JFrame frame = new JFrame("Letters game");
+	private static Score.GameType type;
+	private static Timer timer;
 	
 	public static void main(String[] args){
 		new GameController();

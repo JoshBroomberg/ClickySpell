@@ -15,8 +15,8 @@ public class PlayerController{
 	private static Player activePlayer1;
 	//private static Player activePlayer2;
 
-	static JFrame loginWindow = new JFrame("Login to letters game");
-	static JFrame highscoreWindow = new JFrame("Your high scores");
+	private static JFrame loginWindow = new JFrame("Login to letters game");
+	private static JFrame highscoreWindow = new JFrame("Your high scores");
 
 
 	public PlayerController(){

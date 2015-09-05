@@ -5,28 +5,28 @@ import java.awt.event.ActionListener;
 
 public class SidebarView extends JPanel{
 	
-	JLabel statsPanelLabel = new JLabel("Game statistics:");
-	JLabel scoreLabel = new JLabel("Score:");
-	JTextField scoreField = new JTextField();
-	JLabel highScoreLabel = new JLabel("High score:");
-	JTextField highScoreField = new JTextField();
-	JLabel wordsLabel = new JLabel("Words made:");
-	JTextField wordsField = new JTextField();
-	JLabel lettersLabel = new JLabel("Letters in bag:");
-	JTextField lettersField = new JTextField();
-	JLabel timeLabel = new JLabel("Time remaining");
-	JTextField timeField = new JTextField();
-	JLabel sequenceLabel = new JLabel("Current sequence:");
-	JTextField sequenceField = new JTextField();
+	private JLabel statsPanelLabel = new JLabel("Game statistics:");
+	private JLabel scoreLabel = new JLabel("Score:");
+	private JTextField scoreField = new JTextField();
+	private JLabel highScoreLabel = new JLabel("High score:");
+	private JTextField highScoreField = new JTextField();
+	private JLabel wordsLabel = new JLabel("Words made:");
+	private JTextField wordsField = new JTextField();
+	private JLabel lettersLabel = new JLabel("Letters in bag:");
+	private JTextField lettersField = new JTextField();
+	private JLabel timeLabel = new JLabel("Time remaining");
+	private JTextField timeField = new JTextField();
+	private JLabel sequenceLabel = new JLabel("Current sequence:");
+	private JTextField sequenceField = new JTextField();
 
 
-	JPanel statsPanel = new JPanel(new FlowLayout());
+	private JPanel statsPanel = new JPanel(new FlowLayout());
 
-	JButton checkWord = new JButton("submit word");
-	JButton resetSelection = new JButton("Reset selection");
-	JButton shuffle = new JButton("Shuffle letters");
-	JButton endGame = new JButton("Exit and end game");
-	JPanel gameplayPanel = new JPanel(new FlowLayout());
+	private JButton checkWord = new JButton("submit word");
+	private JButton resetSelection = new JButton("Reset selection");
+	private JButton shuffle = new JButton("Shuffle letters");
+	private JButton endGame = new JButton("Exit and end game");
+	private JPanel gameplayPanel = new JPanel(new FlowLayout());
 
 	public SidebarView(boolean timed, String timeRemaining, String score, String highScore, String lettersRemaining, String wordsMade, String sequence){
 		super();

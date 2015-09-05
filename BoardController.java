@@ -35,14 +35,9 @@ public class BoardController{
 		}
 	}
 
-	public TileGUI[][] getBoard(){
-		//return board tiles
-		return tiles;
-	}
-
-	public int getBoardSize(){
-		//return board size
-		return boardDimension;
+	public BoardView getBoardView(){
+		//returns new board view based on data in this controller
+		return new BoardView(boardDimension,tiles);
 	}
 
 	public void shuffle(){

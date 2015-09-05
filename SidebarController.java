@@ -20,6 +20,11 @@ public class SidebarController{
 		}
 	}
 
+	public SidebarView getSidebarView(String remainingLetters, String wordCount, String sequence){
+		//returns new side bar view based on data in sidebar controller and supplied by game controller
+		return new SidebarView(timed(),"XX", getScore(), getHighScore(), remainingLetters, wordCount, sequence);
+	}
+
 	public void incrementScore(int scoreIncrement){
 		//increase current score by ammount provided
 		currentScore+=scoreIncrement;

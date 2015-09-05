@@ -128,8 +128,10 @@ public class GameController{
 	public static void updateBoard(){
 		//used to create/populate view panels. Called when new data must be displayed
 		frame.getContentPane().removeAll();
-		boardView = new BoardView(boardController.getBoardSize(), boardController.getBoard());
-		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), sidebarController.getHighScore(), boardController.getRemainingLetters(), boardController.getWordCount(), boardController.getSequence());
+		boardView = boardController.getBoardView(); //get board view from controller
+
+		//get side bar view from controller supplying params that need to be access from baordController
+		sidebarView = sidebarController.getSidebarView(boardController.getRemainingLetters(), boardController.getWordCount(), boardController.getSequence());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
 		frame.pack();

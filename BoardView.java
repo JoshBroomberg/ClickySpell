@@ -11,7 +11,5 @@ public class BoardView extends JPanel{
 		}
 	}
 
-	// public void removeTile(TileGUI tile){
-	// 	this.remove(tile);
-	// }
+	
 }

@@ -115,6 +115,10 @@ public class PlayerController{
 		displayLogin();
 	}
 
+	public static Score getHighScore(Score.GameType type){
+		return activePlayer1.getMaxScore(type);
+	}
+
 
 	private static void loginPlayer(Player player){
 		activePlayer1 = player;

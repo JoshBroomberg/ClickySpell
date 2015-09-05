@@ -23,6 +23,7 @@ public class SidebarView extends JPanel{
 	JButton shuffle = new JButton("Shuffle letters");
 	JButton endGame = new JButton("Exit and end game");
 	JPanel gameplayPanel = new JPanel(new FlowLayout());
+
 	public SidebarView(boolean timed, String timeRemaining, String score, String lettersRemaining, String wordsMade){
 		super();
 		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -72,8 +73,6 @@ public class SidebarView extends JPanel{
 	}
 
 	public void setTime(String secondsRemaining){
-		// Integer seconds = Integer.parseInt(timeField.getText());
-		// seconds--;
 		timeField.setText(secondsRemaining);
 	}
 }

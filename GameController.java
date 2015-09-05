@@ -39,13 +39,13 @@ public class GameController{
 		switch(typeChoice){
 			case 1:
 				type = Score.GameType.ARCADE;
-				sidebarController = new SidebarController(false);
+				sidebarController = new SidebarController(false, PlayerController.getHighScore(type));
 			break;
 
 			case 2:
 				type = Score.GameType.TIMED;
 				timer = new Timer(1000, new TimerListener());
-				sidebarController = new SidebarController(true);
+				sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
 				timer.start();
 			break;
 		}

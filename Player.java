@@ -49,6 +49,16 @@ public class Player{
 		return highScores;
 	}
 
+	public Score getMaxScore(Score.GameType mode){
+		sortScores();
+		for(int i = 0; i<scoreCount; i++){
+				if(scores[i].getType()==mode){
+					return scores[i];
+				}
+		}
+		return null;
+	}
+
 	public void addScore(int score, Score.GameType gameType){
 		scores[scoreCount]= new Score(score, gameType);
 		scoreCount++;

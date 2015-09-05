@@ -4,32 +4,35 @@ import java.awt.event.*;
 
 
 public class GameController{
-	private static BoardController boardController;
-	private static BoardView boardView;
+	private static BoardController boardController; //variable will hold board control
+	private static BoardView boardView; //variable will hold board panel
 
-	private static SidebarController sidebarController;
-	private static SidebarView sidebarView;
+	private static SidebarController sidebarController; //var will hold sidebar controller
+	private static SidebarView sidebarView; //var will hold side bar view
 
-	private static JFrame frame = new JFrame("Letters game");
-	private static Score.GameType type;
-	private static Timer timer;
+	private static JFrame frame = new JFrame("Letters game"); //create game play frame
+	private static Score.GameType type; //var will hold type of game arcade/timed
+	private static Timer timer; //will hold timer object
 	
-	public static void main(String[] args){
-		new GameController();
-	}
+	// public static void main(String[] args){
+	// 	new GameController(); //
+	// }
 
 	public GameController(){
+		//instantiate a new game controller calling the display board action
 		displayGameBoard();
 	}
 
 	private static void displayGameBoard(){
-		// UIManager.getDefaults().put("Button.disabledText",Color.RED);
-		// UIManager.getDefaults().put("Button.disabledShadow", Color.RED);
+		//show new game board
 
+		//set up vars to get user input on game setup
 		int typeChoice =0; 
 		int boardSize=0;
 		boolean validType= false;
 		boolean validSize =false;
+
+		//ask user for game type
 		while(!validType){
 			String type = JOptionPane.showInputDialog(
 				"What type of game would you like to play?\n"+
@@ -52,6 +55,7 @@ public class GameController{
 			
 		}
 
+		//ask user for baord dimension
 		while(!validSize){
 			String size = JOptionPane.showInputDialog(
 				"How big would you like the board to be?\n"+
@@ -71,18 +75,25 @@ public class GameController{
 			}
 			
 		}
+
+		//STRUCTURAL NOTE:
+		//The game controller provides the panel controllers the relavent info once, from then on, they handle the passing of
+		//this information to the views
 		
+		//set up sidebar controller depending on game type choice
 		switch(typeChoice){
 			case 1:
-			type = Score.GameType.ARCADE;
-			sidebarController = new SidebarController(false, PlayerController.getHighScore(type));
+			type = Score.GameType.ARCADE; //store type chosen
+			sidebarController = new SidebarController(false, PlayerController.getHighScore(type)); //create sidebar controller to match
 			break;
 
 			case 2:
-			type = Score.GameType.TIMED;
-			timer = new Timer(1000, new TimerListener());
-			sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
-			
+			type = Score.GameType.TIMED; //store type
+
+			//create new timer object
+			timer = new Timer(1000, new TimerListener()); //new timer listener added to timer, see class for details
+
+			sidebarController = new SidebarController(true, PlayerController.getHighScore(type)); //setup sidebar controller to match
 			break;
 
 			default:
@@ -90,9 +101,13 @@ public class GameController{
 			break;
 		}
 
-		boardController = new BoardController(boardSize);
+		boardController = new BoardController(boardSize); //create new board controller based on size provided
+		
+		//setup display fram
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+		//take specific exit action if closed
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {
@@ -100,16 +115,18 @@ public class GameController{
 			}
 		});
 		frame.setResizable(false);
-		updateBoard();
+		updateBoard(); //run update board method to populate view panels
 		frame.setVisible(true);
 
 		if(typeChoice==2){
+			//for timed game, ask if user ready before starting timer
 			JOptionPane.showMessageDialog(frame, "Click ok when you are ready to start", "info:", JOptionPane.INFORMATION_MESSAGE);
 			timer.start();
 		}
 	}
 
 	public static void updateBoard(){
+		//used to create/populate view panels. Called when new data must be displayed
 		frame.getContentPane().removeAll();
 		boardView = new BoardView(boardController.getBoardSize(), boardController.getBoard());
 		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), sidebarController.getHighScore(), boardController.getRemainingLetters(), boardController.getWordCount(), boardController.getSequence());
@@ -119,20 +136,27 @@ public class GameController{
 	}
 
 	public static void shuffle(){
-		resetSelection();
-		boardController.shuffle();
-		updateBoard();
+		//method used to shuffle letters
+		resetSelection(); //resets any active selection
+		boardController.shuffle(); //shuffles actual tiles
+		updateBoard(); //updates board
 	}
 
 	public static void tileClick(int id){
-		boolean validClick = boardController.handleLetterClick(id);
+		//method run when tile click detected
+		boolean validClick = boardController.handleLetterClick(id); //check if valid click
 		if(!validClick){
+			//display error if invalid
 			JOptionPane.showMessageDialog(frame, "Invalid click", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-		sidebarView.setSequence( boardController.getSequence());
-		String word = boardController.getSequence().toLowerCase();
+
+		
+		String word = boardController.getSequence().toLowerCase(); //gets current selection
+		sidebarView.setSequence(word); //set sequence display to reflect selection
 		if(word.length()>0){
-			boolean validword = boardController.validateWord(word);
+			//if selection has letters check if word is valid and set sequence display to reflect validity
+			WordController wordController = new WordController();
+			boolean validword = wordController.isWord(word);
 			if(validword){
 				sidebarView.validWordColor();
 			}else{
@@ -140,38 +164,48 @@ public class GameController{
 			}
 		}
 		else{
+			//if no letters, reset colour indicator to white
 			sidebarView.resetColor();
 		}
 	}
 
 	public static void tick(String secondsRemaining){
+		//method used to decrement time left when timer ticks
 		sidebarView.setTime(secondsRemaining);
 	}
 
 	public static void checkWord(){
+		//method used when word is submitted
 		String word = boardController.getSequence().toLowerCase();
 		boolean validword = boardController.validateWord(word);
 		if(validword){
-			int score = boardController.scoreSequence();
+			//if word valid
+			int score = boardController.scoreSequence(); //score word
+			//alert user to success
 			JOptionPane.showMessageDialog(frame, "Congrats, "+word+" is a word. \nYou scored: "+score+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
-			sidebarController.incrementScore(score);
-			boardController.clearUsedTiles();
-			updateBoard();
+			sidebarController.incrementScore(score); //increment score
+			boardController.clearUsedTiles(); //clear used tiles
+			updateBoard(); //update baord display
 		}
 		else{
+			//show error for invalid word
 			JOptionPane.showMessageDialog(frame, "Invalid word", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	public static void resetSelection(){
-		boardController.reset();
-		sidebarView.setSequence("");
+		//clear selection sequence
+		boardController.reset(); //reset actual sequence
+		sidebarView.setSequence(""); //reset sequence display
 		sidebarView.resetColor();
 	}
 
 	private static boolean endGame(){
+		//ends game recording score if any achieved, return true if score recorded, false if not
+		//get current score
 		int score = Integer.parseInt(sidebarController.getScore());
 		if(score>0){
+			//if any words actually created, record new score for active player
 			PlayerController.registerNewScore(score, type);
 			return true;
 		}else{
@@ -180,21 +214,26 @@ public class GameController{
 	}
 
 	public static void exit(){
+		//method used when game is quit
 		if(type==Score.GameType.TIMED){
-			timer.stop();
+			timer.stop(); //stop timer
 		}
 		if(endGame()){
+			//if score was recorded, ie endGame return true check if it was a highscore
 			int oldHigh =Integer.parseInt(sidebarController.getHighScore());
 			int newHigh = Integer.parseInt(sidebarController.getScore());
 			if(oldHigh<newHigh){
+				//alert user to achievement of new high score
 				JOptionPane.showMessageDialog(frame, "Thats the end! You set a new highscore of "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
 			}else{
+				//alert user to end of game
 				JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}else{
+			//alert user that score of 0 wasnt saved
 			JOptionPane.showMessageDialog(frame, "You created no words, no score recorded!", "info:", JOptionPane.INFORMATION_MESSAGE);
 		}
-		frame.dispose();
-		MainController.showMenu();
+		frame.dispose(); //close frame
+		MainController.showMenu(); //shwo main menu
 	}
 }

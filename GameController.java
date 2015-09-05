@@ -23,18 +23,51 @@ public class GameController{
 	}
 
 	private static void displayGameBoard(){
+		int typeChoice =0; 
+		int boardSize=0;
+		boolean validType= false;
+		boolean validSize =false;
+		while(!validType){
+			String type = JOptionPane.showInputDialog(
+				"What type of game would you like to play?\n"+
+				"Enter a number from the list below:\n"+
+				"1. Arcade (untimed)\n"+
+				"2. 1 minute timed game ");
+			if(Character.isDigit(type.charAt(0))&&type.length()==1){
+				typeChoice = Integer.parseInt(type);
+				if(typeChoice==1||typeChoice==2){
+					validType=true;
+				}
+				else{
+					JOptionPane.showMessageDialog(frame, "Invalid choice", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}else{
+				JOptionPane.showMessageDialog(frame, "Invalid input, not a valid number", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 
-		int typeChoice = Integer.parseInt(JOptionPane.showInputDialog(
-			"What type of game would you like to play?\n"+
-			"Enter a number from the list below:\n"+
-			"1. Arcade (untimed)\n"+
-			"2. 1 minute timed game "));
+			
+			
+		}
 
-		int boardSize = Integer.parseInt(JOptionPane.showInputDialog(
-			"How big would you like the board to be?\n"+
-			"Enter a number between 2 and 9\n"+
-			"2 will yield a 2x2 grid, the hardest\n"+
-			"9 will yield a 9x9 grid, the easiest"));
+		while(!validSize){
+			String size = JOptionPane.showInputDialog(
+				"How big would you like the board to be?\n"+
+				"Enter a number between 3 and 9\n"+
+				"3 will yield a 3x3 grid, the hardest\n"+
+				"9 will yield a 9x9 grid, the easiest");
+			if(Character.isDigit(size.charAt(0))&&size.length()==1){
+				boardSize = Integer.parseInt(size);
+				if(boardSize>=3&&boardSize<=9){
+					validSize=true;
+				}
+				else{
+					JOptionPane.showMessageDialog(frame, "Invalid size", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}else{
+				JOptionPane.showMessageDialog(frame, "Invalid input, not a valid number", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
 		
 		switch(typeChoice){
 			case 1:
@@ -48,11 +81,14 @@ public class GameController{
 			sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
 			timer.start();
 			break;
+
+			default:
+			JOptionPane.showMessageDialog(frame, "Unexpected error", "Error", JOptionPane.ERROR_MESSAGE);
+			break;
 		}
 
 		boardController = new BoardController(boardSize);
 		frame.getContentPane().setLayout(new BorderLayout());
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -125,7 +161,13 @@ public class GameController{
 			timer.stop();
 		}
 		if(endGame()){
-			JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+			int oldHigh =Integer.parseInt(sidebarController.getHighScore());
+			int newHigh = Integer.parseInt(sidebarController.getScore());
+			if(oldHigh<newHigh){
+				JOptionPane.showMessageDialog(frame, "Thats the end! You set a new highscore of "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}else{
 			JOptionPane.showMessageDialog(frame, "You created no words, no score recorded!", "info:", JOptionPane.INFORMATION_MESSAGE);
 		}

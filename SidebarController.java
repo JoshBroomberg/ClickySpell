@@ -6,7 +6,12 @@ public class SidebarController{
 	public SidebarController(boolean timed, Score highScore){
 		currentScore = 0;
 		this.timed = timed;
-		this.highScore = highScore.getScore();
+		if(highScore!=null){
+			this.highScore = highScore.getScore();
+		}
+		else{
+			this.highScore=0;
+		}
 	}
 
 	public void incrementScore(int scoreIncrement){

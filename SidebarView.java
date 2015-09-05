@@ -31,9 +31,8 @@ public class SidebarView extends JPanel{
 		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(new Dimension(200, 400));
-		this.add(Box.createRigidArea(new Dimension(200,40)));
-
-		gameplayPanel.setPreferredSize(new Dimension(200, 250));
+		this.add(Box.createRigidArea(new Dimension(200,10)));
+		gameplayPanel.setPreferredSize(new Dimension(200, 400));
 		checkWord.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.CHECK_WORD));
 		resetSelection.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.RESET_SELECTION));
 		endGame.addActionListener(new ButtonClickHandler(ButtonClickHandler.Actions.EXIT_GAME));
@@ -41,7 +40,6 @@ public class SidebarView extends JPanel{
 		gameplayPanel.add(checkWord);
 		gameplayPanel.add(shuffle);
 		gameplayPanel.add(resetSelection);
-		//gameplayPanel.add(Box.createRigidArea(new Dimension(200,40)));
 		gameplayPanel.add(endGame);
 
 		
@@ -52,26 +50,26 @@ public class SidebarView extends JPanel{
 		wordsField.setText(wordsMade);
 		highScoreField.setText(highScore);
 
-		statsPanel.setPreferredSize(new Dimension(200, 250));
-		statsPanel.add(Box.createRigidArea(new Dimension(200,20)));
+		statsPanel.setPreferredSize(new Dimension(200, 230));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(scoreLabel);
 		statsPanel.add(scoreField);
-		statsPanel.add(Box.createRigidArea(new Dimension(200,20)));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(highScoreLabel);
 		statsPanel.add(highScoreField);
-		statsPanel.add(Box.createRigidArea(new Dimension(200,10)));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(wordsLabel);
 		statsPanel.add(wordsField);
-		statsPanel.add(Box.createRigidArea(new Dimension(200,10)));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 		statsPanel.add(lettersLabel);
 		statsPanel.add(lettersField);
 		if(timed){
 			timeField.setText(timeRemaining);
-			statsPanel.add(Box.createRigidArea(new Dimension(200,10)));
+			statsPanel.add(Box.createRigidArea(new Dimension(200,5)));
 			statsPanel.add(timeLabel);
 			statsPanel.add(timeField);
 		}
-		statsPanel.add(Box.createRigidArea(new Dimension(200,30)));
+		statsPanel.add(Box.createRigidArea(new Dimension(200,10)));
 		this.add(statsPanel, BorderLayout.NORTH);
 
 		

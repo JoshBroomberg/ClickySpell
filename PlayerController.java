@@ -62,20 +62,45 @@ public class PlayerController{
 	}
 
 	public static void addPlayer(){
-		String username = JOptionPane.showInputDialog(loginWindow, "Enter your desired username");
-		String password = JOptionPane.showInputDialog(loginWindow, "Enter your desired password");
-		if(findPlayer(username)==null){
-			Player toSave = new Player(username, password);
-			players[playerCount]=toSave;
-			playerCount++;
-			loginPlayer(toSave);
-			writePlayers();
-			JOptionPane.showMessageDialog(null, "Player created and logged in", "Info:", JOptionPane.INFORMATION_MESSAGE);
-		}
-		else{
-			JOptionPane.showMessageDialog(loginWindow, "A user with that username exists", "Error", JOptionPane.ERROR_MESSAGE);
+		String username=null;
+		String password = null;
+		boolean usernameSuccess = false;
+		boolean passwordSuccess = false;
 
+		while(!usernameSuccess){
+			username = JOptionPane.showInputDialog(loginWindow, "Enter your desired username");
+			if(username!=null &&username.length()!=0){
+				if(findPlayer(username)==null){
+					usernameSuccess = true;
+				}
+				else{
+					JOptionPane.showMessageDialog(loginWindow, "A user with that username exists", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}else{
+				JOptionPane.showMessageDialog(loginWindow, "Username can't be blank", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
+		while(!passwordSuccess){
+			JPasswordField passfield = new JPasswordField(15);
+			int okClicked = JOptionPane.showConfirmDialog(loginWindow, passfield, "Enter Password", JOptionPane.OK_CANCEL_OPTION);
+			
+			if (okClicked == JOptionPane.OK_OPTION) {
+				password = new String(passfield.getPassword());
+				if(password.length()!=0){
+					passwordSuccess=true;
+				}else{
+					JOptionPane.showMessageDialog(loginWindow, "Password can't be blank", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+
+		Player toSave = new Player(username, password);
+		players[playerCount]=toSave;
+		playerCount++;
+		loginPlayer(toSave);
+		writePlayers();
+		JOptionPane.showMessageDialog(null, "Player created and logged in", "Info:", JOptionPane.INFORMATION_MESSAGE);
+	
 	}
 
 	public static void registerNewScore(int score, Score.GameType gameType){
@@ -93,21 +118,43 @@ public class PlayerController{
 
 	}
 
-	public static void login(){ //handle errors
-		String username = JOptionPane.showInputDialog(loginWindow, "Enter your username");
-		String password = JOptionPane.showInputDialog(loginWindow, "Enter your password");
-		Player playerToLogin = findPlayer(username);
+	public static void login(){
+		boolean usernameSuccess = false;
+		boolean passwordSuccess = false;
+		Player playerToLogin =null; 
+		String username="";//handle errors
+		while(!usernameSuccess){
+			username = JOptionPane.showInputDialog(loginWindow, "Enter your username");
+			if(username!=null&&username.length()!=0){
+				playerToLogin = findPlayer(username);
+			}else{
+				JOptionPane.showMessageDialog(loginWindow, "Username can't be blank", "Error", JOptionPane.ERROR_MESSAGE);
+				continue;
+			}
+			if(playerToLogin==null){
+				JOptionPane.showMessageDialog(loginWindow, "No user with that username found", "Error", JOptionPane.ERROR_MESSAGE);
+			}else{
+				usernameSuccess=true;
+			}
+		}
+		while(!passwordSuccess){
+			JPasswordField passfield = new JPasswordField(15);
+			int okClicked = JOptionPane.showConfirmDialog(loginWindow, passfield, "Enter Password", JOptionPane.OK_CANCEL_OPTION);
+			String password = null;
+			if (okClicked == JOptionPane.OK_OPTION) {
+				password = new String(passfield.getPassword());
+			}
 
-		if(playerToLogin==null){
-			JOptionPane.showMessageDialog(loginWindow, "No user with that username found", "Error", JOptionPane.ERROR_MESSAGE);
+			if(!playerToLogin.getPassword().equals(password)){
+				JOptionPane.showMessageDialog(loginWindow, "Invalid password, try again", "Error", JOptionPane.ERROR_MESSAGE);
+			}else{
+				passwordSuccess=true;
+			}
 		}
-		else if(!playerToLogin.getPassword().equals(password)){
-			JOptionPane.showMessageDialog(loginWindow, "Invalid password, try again", "Error", JOptionPane.ERROR_MESSAGE);
-		}
-		else{
-			JOptionPane.showMessageDialog(loginWindow, "Welcome, "+username, "Info:", JOptionPane.INFORMATION_MESSAGE);
-			loginPlayer(playerToLogin);
-		}
+		JOptionPane.showMessageDialog(loginWindow, "Welcome, "+username, "Info:", JOptionPane.INFORMATION_MESSAGE);
+		loginPlayer(playerToLogin);
+
+		
 	}
 
 	public static void logout(){

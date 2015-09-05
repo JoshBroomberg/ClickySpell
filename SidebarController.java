@@ -18,6 +18,11 @@ public class SidebarController{
 		return wrapperInt.toString();
 	}
 
+	public String getHighScore(){
+		Integer wrapperInt = highScore;
+		return wrapperInt.toString();
+	}
+
 	public boolean timed(){
 		return timed;
 	}

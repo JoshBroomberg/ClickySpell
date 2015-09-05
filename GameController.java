@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 
 public class GameController{
@@ -19,7 +19,7 @@ public class GameController{
 	}
 
 	public GameController(){
-		 displayGameBoard();
+		displayGameBoard();
 	}
 
 	private static void displayGameBoard(){
@@ -38,32 +38,40 @@ public class GameController{
 		
 		switch(typeChoice){
 			case 1:
-				type = Score.GameType.ARCADE;
-				sidebarController = new SidebarController(false, PlayerController.getHighScore(type));
+			type = Score.GameType.ARCADE;
+			sidebarController = new SidebarController(false, PlayerController.getHighScore(type));
 			break;
 
 			case 2:
-				type = Score.GameType.TIMED;
-				timer = new Timer(1000, new TimerListener());
-				sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
-				timer.start();
+			type = Score.GameType.TIMED;
+			timer = new Timer(1000, new TimerListener());
+			sidebarController = new SidebarController(true, PlayerController.getHighScore(type));
+			timer.start();
 			break;
 		}
 
 		boardController = new BoardController(boardSize);
 		frame.getContentPane().setLayout(new BorderLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        updateBoard();
-        frame.setVisible(true);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent event) {
+				exit();
+			}
+		});
+		frame.setResizable(false);
+		updateBoard();
+		frame.setVisible(true);
 	}
 
 	public static void updateBoard(){
 		frame.getContentPane().removeAll();
 		boardView = new BoardView(boardController.getBoardSize(), boardController.getBoard());
-		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), boardController.getRemainingLetters(), boardController.getWordCount());
+		sidebarView = new SidebarView(sidebarController.timed(),"XX", sidebarController.getScore(), sidebarController.getHighScore(), boardController.getRemainingLetters(), boardController.getWordCount());
 		frame.getContentPane().add(boardView, BorderLayout.WEST);
 		frame.getContentPane().add(sidebarView,BorderLayout.EAST);
-	    frame.pack();
+		frame.pack();
 	}
 
 	public static void shuffle(){
@@ -102,17 +110,25 @@ public class GameController{
 		boardController.reset();
 	}
 
-	private static void endGame(){
+	private static boolean endGame(){
 		int score = Integer.parseInt(sidebarController.getScore());
-		PlayerController.registerNewScore(score, type);
+		if(score>0){
+			PlayerController.registerNewScore(score, type);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public static void exit(){
 		if(type==Score.GameType.TIMED){
 			timer.stop();
 		}
-		endGame();
-		JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+		if(endGame()){
+			JOptionPane.showMessageDialog(frame, "Thats the end! You final score was: "+sidebarController.getScore()+" points", "info:", JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			JOptionPane.showMessageDialog(frame, "You created no words, no score recorded!", "info:", JOptionPane.INFORMATION_MESSAGE);
+		}
 		frame.dispose();
 		MainController.showMenu();
 	}

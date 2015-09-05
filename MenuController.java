@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+import java.awt.event.*;
 
 
 public class MenuController{
@@ -18,7 +19,14 @@ public class MenuController{
 
 		menuWindow.getContentPane().removeAll();
 		menuWindow.getContentPane().setLayout(new BorderLayout());
-        menuWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //menuWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		menuWindow.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent event) {
+				logout();
+			}
+		});
         menuWindow.getContentPane().add(header,BorderLayout.NORTH);
         menuWindow.getContentPane().add(new MenuView(),BorderLayout.CENTER);
         menuWindow.setSize(290, 275);
@@ -44,7 +52,6 @@ public class MenuController{
 	public static void logout(){
 		menuWindow.dispose();
 		MainController.showLogin();
+		JOptionPane.showMessageDialog(null, "You have logged out", "info:", JOptionPane.INFORMATION_MESSAGE);
 	}
-
-	
 }
